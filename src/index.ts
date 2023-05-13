@@ -4,6 +4,8 @@ import http from "http";
 import bodyParser from "body-parser";
 import cors from "cors";
 
+import Database from "./api/v1/database";
+
 const app: Express = express();
 app.use(
   cors({
@@ -24,3 +26,7 @@ app.get("/", (req: Request, res: Response) => {
 server.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
+
+// Connect Database
+const db: Database = Database.getInstance<Database>();
+db.connect();
