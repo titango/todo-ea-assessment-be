@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import Database from "./api/v1/database";
-import { TaskRouter } from "./api/v1/routes";
+import { TasksRouter } from "./api/v1/routes";
 import { IError } from "./api/v1/@types/error.type";
 
 const app: Express = express();
@@ -24,7 +24,7 @@ const apiVersion = 1;
 const apiVersionRoutes = `v${apiVersion}`;
 
 // Routes
-app.use(`${apiVersionRoutes}/tasks`, TaskRouter);
+app.use(`${apiVersionRoutes}/tasks`, TasksRouter);
 
 // Catch-all route handler for invalid routes
 app.use((req: Request, res: Response, next: NextFunction) => {

@@ -1,3 +1,3 @@
-import TaskRouter from "./tasks/task.router";
+import TasksRouter from "./tasks.router";
 
-export { TaskRouter };
+export { TasksRouter };
