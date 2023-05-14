@@ -2,10 +2,10 @@
   "name": "todo-ea-assessment-be",
   "version": "1.0.0",
   "description": "EA Assessment - Backend",
-  "main": "index.ts",
+  "main": "server.ts",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/server.js",
     "dev": "nodemon"
   },
   "repository": {

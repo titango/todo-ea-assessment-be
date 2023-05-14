@@ -1,6 +1,6 @@
-import Singleton from "../models/singleton";
-import Mongo from "./mongo/connection";
-import mongoConnection from "./mongo/connection";
+import Singleton from "../../../helpers/singleton";
+import Mongo from "./connection";
+import mongoConnection from "./connection";
 
 class Database extends Singleton {
   constructor() {
