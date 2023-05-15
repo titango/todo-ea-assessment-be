@@ -2,7 +2,7 @@ import { ITask } from "../@types/tasks.type";
 import tasksDao from "../daos/tasks.dao";
 
 class TaskService {
-  getAllTasks() {
+  getTasks() {
     return tasksDao.getTasks();
   }
   createTask(values: ITask) {

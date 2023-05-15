@@ -8,8 +8,10 @@ const tasksController = new TasksController(new TaskService());
 /* /tasks */
 router
   .route("/")
-  .get(tasksController.getAllTasks.bind(tasksController))
+  .get(tasksController.getTasks.bind(tasksController))
   .post(tasksController.createTask.bind(tasksController))
   .delete(tasksController.deleteTasks.bind(tasksController));
+
+router.route("/:id").put(tasksController.updateTask.bind(tasksController));
 
 export default router;

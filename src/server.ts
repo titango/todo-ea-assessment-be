@@ -24,7 +24,7 @@ const apiVersion = 1;
 const apiVersionRoutes = `v${apiVersion}`;
 
 // Routes
-app.use(`${apiVersionRoutes}/tasks`, TasksRouter);
+app.use(`/api/${apiVersionRoutes}/tasks`, TasksRouter);
 
 // Catch-all route handler for invalid routes
 app.use((req: Request, res: Response, next: NextFunction) => {

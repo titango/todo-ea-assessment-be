@@ -5,15 +5,20 @@ import { Types } from "mongoose";
 // Also in case of switching database, we do not mess up with Service classes.
 class TasksDao {
   getTasks() {
-    return Task.find({}, null, { lean: true });
+    return Task.find({}, null, { sort: { title: 1 }, lean: true });
   }
 
   getTask(id: Types.ObjectId | string) {
     return Task.findById(id, null, { lean: true });
   }
 
-  createTask(values: Record<string, any>) {
-    return new Task(values).save().then((task) => task.toObject());
+  async createTask(values: Record<string, any>) {
+    try {
+      const savedObj = await new Task(values).save();
+      return savedObj.toObject();
+    } catch (err) {
+      return {};
+    }
   }
 
   updateTaskById(id: Types.ObjectId | string, values: Record<string, any>) {
