@@ -10,7 +10,9 @@ class SocketService extends Singleton {
   public connectServer(server: http.Server) {
     this.io = new Server(server, {
       cors: {
-        origin: `${process.env.CLIENT_SCHEME}://${process.env.CLIENT_HOST}:${process.env.CLIENT_PORT}`,
+        origin: `${process.env.CLIENT_SCHEME}://${process.env.CLIENT_HOST}${
+          process.env.CLIENT_PORT ? `:${process.env.CLIENT_PORT}` : ""
+        }`,
         methods: ["GET", "POST", "PUT", "DELETE"],
       },
     });

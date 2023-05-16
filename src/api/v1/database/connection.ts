@@ -3,7 +3,10 @@ import Singleton from "../../../helpers/singleton";
 
 class Mongo extends Singleton {
   private port = 27017; //default
-  private MONGO_URL = `mongodb://user:password@127.0.0.1:${this.port}/mydb`;
+  private MONGO_URL =
+    process.env.NODE_ENV === "production"
+      ? process.env.MONGO_URL || ""
+      : `mongodb://user:password@127.0.0.1:${this.port}/mydb`;
 
   public connect() {
     mongoose.Promise = Promise;

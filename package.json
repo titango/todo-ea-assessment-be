@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "build:prod": "NODE_ENV=production npx tsc",
-    "start": "node dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "dev": "nodemon",
     "test": "jest --watchAll"
   },

@@ -8,14 +8,11 @@ import { TasksRouter } from "./api/v1/routes";
 import { IError } from "./api/v1/@types/error.type";
 
 const app: Express = express();
-app.use(
-  cors({
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(bodyParser.json());
 
-dotenv.config();
+if (process.env.NODE_ENV !== "production") dotenv.config();
+else dotenv.config({ path: ".env.production" });
 
 const apiVersion = 1;
 const apiVersionRoutes = `v${apiVersion}`;
