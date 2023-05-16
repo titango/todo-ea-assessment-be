@@ -1,52 +1,16 @@
-import express, { Express, Request, Response, NextFunction } from "express";
-import dotenv from "dotenv";
 import http from "http";
-import bodyParser from "body-parser";
-import cors from "cors";
 
+import app from "./app";
 import Database from "./api/v1/database";
-import { TasksRouter } from "./api/v1/routes";
-import { IError } from "./api/v1/@types/error.type";
 
-const app: Express = express();
-app.use(
-  cors({
-    credentials: true,
-  })
-);
-app.use(bodyParser.json());
-
-dotenv.config();
-
+const scheme = process.env.SCHEME;
+const host = process.env.HOST;
 const port = process.env.PORT;
 const server = http.createServer(app);
-const apiVersion = 1;
-const apiVersionRoutes = `v${apiVersion}`;
 
-// Routes
-app.use(`/api/${apiVersionRoutes}/tasks`, TasksRouter);
-
-// Catch-all route handler for invalid routes
-app.use((req: Request, res: Response, next: NextFunction) => {
-  const error: IError = new Error("Invalid route");
-  error.status = 404;
-  next(error);
+server.listen(port, async () => {
+  console.log(`⚡️[server]: Server is running at ${scheme}://${host}:${port}`);
+  // Connect Database
+  const db: Database = Database.getInstance<Database>();
+  db.connect();
 });
-
-// Error handling middleware
-app.use((err: IError, req: Request, res: Response) => {
-  res.status(err.status || 500);
-  res.json({
-    error: {
-      message: err.message,
-    },
-  });
-});
-
-server.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-});
-
-// Connect Database
-const db: Database = Database.getInstance<Database>();
-db.connect();

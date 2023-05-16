@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import TaskService from "../services/task.service";
+import mongoose from "mongoose";
 
 class TasksController {
   private service: TaskService;
@@ -9,57 +10,72 @@ class TasksController {
   }
 
   async getTasks(req: Request, res: Response) {
-    const allTasks = await this.service.getTasks();
-    res.status(200).json(allTasks);
+    try {
+      const allTasks = await this.service.getTasks();
+      res.status(200).json(allTasks);
+    } catch (err) {
+      res.status(500).send("Failed to retrieve all tasks");
+    }
   }
 
   async createTask(req: Request, res: Response) {
     const body = req.body;
-    const created = await this.service.createTask(body);
-    if (created) {
-      res.status(200).json(created);
+    if (!body || Object.keys(body).length === 0) {
+      res.status(400).json("No data from client");
     } else {
-      res.status(500).json({ error: "Failed to create new task" });
+      try {
+        const created = await this.service.createTask(body);
+        res.status(201).json(created);
+      } catch (err) {
+        res.status(500).send("Failed to create new task");
+      }
     }
   }
   async updateTask(req: Request, res: Response) {
     const body = req.body;
     const id = req.params.id;
-    const updated = await this.service.updateTask(id, body);
-    if (updated) {
-      res.status(200).json(updated);
+    if (!body || !id || Object.keys(body).length === 0) {
+      res.status(400).json("No data from client");
     } else {
-      res.status(500).json({ error: "Failed to update new task" });
+      try {
+        const updated = await this.service.updateTask(id, body);
+        res.status(201).json(updated);
+      } catch (err) {
+        res.status(500).json("Failed to update new task");
+      }
     }
   }
 
   async deleteTaskById(req: Request, res: Response) {
     const id = req.params.id;
-    const deleted = await this.service.deleteTaskById(id);
-    if (deleted) {
-      res.status(200).json(deleted);
-    } else {
+    try {
+      const deleted = await this.service.deleteTaskById(id);
+      res.status(201).json(deleted);
+    } catch (err) {
       res.status(500).json({ error: "Failed to delete a task" });
     }
   }
 
   async deleteTasks(req: Request, res: Response) {
-    const deleted = await this.service.deleteTasks();
-    if (deleted) {
+    try {
+      await this.service.deleteTasks();
       res.status(200).json({ success: true });
-    } else {
+    } catch (err) {
       res.status(500).json({ error: "Failed to delete tasks" });
     }
   }
 
   async searchTasks(req: Request, res: Response) {
     const query = req.query.q;
-    console.log("query: ", query);
-    const searched = await this.service.searchTasks(query as string);
-    if (searched) {
-      res.status(200).json(searched);
+    if (!query) {
+      res.status(400).send("No query string found");
     } else {
-      res.status(500).json({ error: "Failed to search tasks" });
+      try {
+        const searched = await this.service.searchTasks(query as string);
+        res.status(200).json(searched);
+      } catch (err) {
+        res.status(500).json({ error: "Failed to search tasks" });
+      }
     }
   }
 }
