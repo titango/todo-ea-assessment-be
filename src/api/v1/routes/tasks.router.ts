@@ -12,6 +12,11 @@ router
   .post(tasksController.createTask.bind(tasksController))
   .delete(tasksController.deleteTasks.bind(tasksController));
 
-router.route("/:id").put(tasksController.updateTask.bind(tasksController));
+router.route("/search").get(tasksController.searchTasks.bind(tasksController));
+
+router
+  .route("/:id")
+  .put(tasksController.updateTask.bind(tasksController))
+  .delete(tasksController.deleteTaskById.bind(tasksController));
 
 export default router;

@@ -32,12 +32,34 @@ class TasksController {
       res.status(500).json({ error: "Failed to update new task" });
     }
   }
+
+  async deleteTaskById(req: Request, res: Response) {
+    const id = req.params.id;
+    const deleted = await this.service.deleteTaskById(id);
+    if (deleted) {
+      res.status(200).json(deleted);
+    } else {
+      res.status(500).json({ error: "Failed to delete a task" });
+    }
+  }
+
   async deleteTasks(req: Request, res: Response) {
     const deleted = await this.service.deleteTasks();
     if (deleted) {
       res.status(200).json({ success: true });
     } else {
       res.status(500).json({ error: "Failed to delete tasks" });
+    }
+  }
+
+  async searchTasks(req: Request, res: Response) {
+    const query = req.query.q;
+    console.log("query: ", query);
+    const searched = await this.service.searchTasks(query as string);
+    if (searched) {
+      res.status(200).json(searched);
+    } else {
+      res.status(500).json({ error: "Failed to search tasks" });
     }
   }
 }

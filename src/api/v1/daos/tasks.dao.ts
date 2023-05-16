@@ -4,8 +4,8 @@ import { Types } from "mongoose";
 // DAO class - created for connecting to ORM of database
 // Also in case of switching database, we do not mess up with Service classes.
 class TasksDao {
-  getTasks() {
-    return Task.find({}, null, { sort: { title: 1 }, lean: true });
+  getTasks(query: Record<string, any>) {
+    return Task.find(query, null, { sort: { title: 1 }, lean: true });
   }
 
   getTask(id: Types.ObjectId | string) {
