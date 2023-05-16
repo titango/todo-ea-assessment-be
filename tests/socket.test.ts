@@ -1,8 +1,8 @@
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 const Client = require("socket.io-client");
-import mongoose from "mongoose";
 import { AddressInfo } from "net";
+import mongoose from "mongoose";
 
 import SocketService from "../src/api/v1/services/socket.service";
 import TaskService from "../src/api/v1/services/task.service";
