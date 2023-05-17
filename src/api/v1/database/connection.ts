@@ -6,7 +6,7 @@ class Mongo extends Singleton {
   private MONGO_URL =
     process.env.NODE_ENV === "production"
       ? process.env.MONGO_URL || ""
-      : `mongodb://user:password@127.0.0.1:${this.port}/mydb`;
+      : `mongodb://user:password@127.0.0.1:27017/mydb`;
 
   public connect() {
     mongoose.Promise = Promise;
